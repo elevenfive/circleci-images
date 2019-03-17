@@ -1,9 +1,11 @@
 
-ARG ndk_version=android-ndk-r17b
+ARG ndk_version=android-ndk-r18c
+ARG ndk_sha256=4c62514ec9c2309315fd84da6d52465651cdb68605058f231f1e480fcf2692e1
 ARG android_ndk_home=/opt/android/${ndk_version}
 
 # install NDK
 RUN curl --silent --show-error --location --fail --retry 3 --output /tmp/${ndk_version}.zip https://dl.google.com/android/repository/${ndk_version}-linux-x86_64.zip && \
+    echo "${ndk_sha256}  ${ndk_version}-linux-x86_64.zip" > ${ndk_version}-linux-x86_64.zip.sha256 && sha256sum -c ${ndk_version}-linux-x86_64.zip.sha256 && 
     sudo unzip -q /tmp/${ndk_version}.zip -d /opt/android && \
     rm /tmp/${ndk_version}.zip && \
     sudo chown -R circleci:circleci ${android_ndk_home}
